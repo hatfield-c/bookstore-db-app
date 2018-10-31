@@ -12,18 +12,43 @@ public class DBConnection {
 	private String user;
 	private String pass;
 	
+	public static String[] BooksCol = {
+			"isbn",
+			"author",
+			"title",
+			"price",
+			"subject"
+	};
+	
+	public static String[] MembersCol = {
+			"fname",
+			"lname",
+			"address",
+			"city",
+			"state",
+			"zip",
+			"phone",
+			"email",
+			"userid",
+			"password",
+			"creditcardtype",
+			"creditcardnumber"
+	};
+	
 	DBConnection(String url, String user, String pass){
 		this.url = url;
 		this.user = user;
 		this.pass = pass; 
 	}
 	
-	public QueryData[] read(String table, String columns[]) throws SQLException{
+	public QueryData[] read(String table, String columns[], Condition condition) throws SQLException{
 		if(columns == null || columns.length < 1){
 			throw new SQLException("Not enough columns");
 		}
 		
-		String qry = "SELECT " + this.selectBuilder(columns) + " FROM " + table;
+		String where = (condition == null ? "" : " WHERE " + condition.con[0] + " like ?" ); 
+		String qry = "SELECT " + this.selectBuilder(columns) + " FROM " + table + where;
+		
 		ResultSet result;
 		PreparedStatement state;
 		QueryData data[];
@@ -31,6 +56,11 @@ public class DBConnection {
 		
 		try (Connection connection = DriverManager.getConnection(this.url, this.user, this.pass)){
 			state = connection.prepareStatement(qry, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			
+			if(condition != null){
+				state.setString(1, condition.con[1]);
+			}
+			
 			result = state.executeQuery();
 			count = this.resultSize(result);
 			

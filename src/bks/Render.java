@@ -31,6 +31,10 @@ public class Render {
 		this.notice("ERROR", msg);
 	}
 	
+	public void success(String msg){
+		this.notice("SUCCESS", msg);
+	}
+	
 	public void notice(String title, String msg){
 		System.out.println("[" + title + "]: " +  msg);
 	}
