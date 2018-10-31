@@ -4,9 +4,11 @@ import java.util.Scanner;
 public class Application {
 
 	private static Render render;
+	private static DBConnection db;
 	
-	Application(Render render){
+	Application(Render render, DBConnection db){
 		Application.render = render;
+		Application.db = db;
 	}
 	
 	public void run(){
@@ -41,6 +43,10 @@ public class Application {
 	
 	public static Render GetRenderer(){
 		return Application.render;
+	}
+	
+	public static DBConnection GetDB(){
+		return Application.db;
 	}
 	
 }

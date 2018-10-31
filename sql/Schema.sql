@@ -65,3 +65,25 @@ create table cart (
   foreign key (userid) references members,
   foreign key (isbn) references books
 );
+
+insert into books VALUES ('4863927501', 'Hellen Keller', 'An Autobiography', 22.50, 'Non-fiction');
+insert into books VALUES ('0985763140', 'David Copperfield', 'Illusions: From Cards to Rabbits', 1.75, 'How To');
+insert into books VALUES ('5683275501', 'Neil Degrasse Tyson', 'Space Be Wild', 10.00, 'Science');
+insert into books VALUES ('9785652211', 'Mark Zuckerberg', 'I Swear I''m Not A Robot', 12.00, 'Fanatasy');
+insert into books VALUES ('5062338480', 'Neil Degreasse Tyson', 'A Guide To Astrophysics', 20.00, 'Science');
+insert into books VALUES ('5484960286', 'Jonathan Campwell', 'Making It In the Outdoors', 5.50, 'How To');
+insert into books VALUES ('2268530002', 'Teryy Walkinthro', 'A Brief History of Catalonia', 9.88, 'Non-fiction');
+insert into books VALUES ('5983542138', 'Jerry McGuire', 'Teragon', 15.00, 'Fantasy');
+insert into books VALUES ('0065958201', 'Neil Degrasse Tyson', '101 Astronaut Knock-Knock Jokes', 55.00, 'Science');
+insert into books VALUES ('1258435900', 'Jude Law', 'An Introduction to Law', 75.00, 'Non-fiction');
+insert into books VALUES ('2582256830', 'Grant Smith', 'Trickonometry: Math Tips', 25.00, 'Non-fiction');
+insert into books VALUES ('0500689000', 'Larry Knick', 'Cells At Work', 30.00, 'Science');
+insert into books VALUES ('2500083558', 'David Copperfield', 'The Magicians Lover', 2.00, 'Fantasy');
+insert into books VALUES ('6590553000', 'Helen Keller', 'A Case For Socialism', 0.50, 'Non-fiction');
+insert into books VALUES ('4468995502', 'Terry Walkinthro', 'Starting A Union', 6.00, 'How To');
+insert into books VALUES ('5390005308', 'Jerry McGuire', 'Bible 2: Electric Boogaloo', 3.50, 'Fantasy');
+insert into books VALUES ('8635982001', 'Jude Law', 'An Advanced Guide to Law', 98.00, 'Non-fiction');
+insert into books VALUES ('8666933443', 'Hank Smith', 'Computers and Such', 22.00, 'Science');
+insert into books VALUES ('3500880022', 'Jude Law', 'Beyond Law', 50.00, 'Non-fiction');
+insert into books VALUES ('6899211500', 'David Copperfield', 'A Joke''s Grand Design', 14.00, 'Humor');
+insert into books VALUES ('1000056889', 'Falcor Nightingale', 'Please Don''t Sue Us', 1.00, 'Humor');
