@@ -3,8 +3,9 @@ package bks;
 public class Login implements MenuAction {
 	
 	private Render render;
+	private String memberPrompt = "Type your option";
 	private Menu memberMenu = new Menu(
-		"Type your option",
+		this.memberPrompt,
 		new char[] { 
 			'1',
 			'2',
@@ -38,7 +39,8 @@ public class Login implements MenuAction {
 	);
 	private String loginFailure = "Error during authentication. Returning to main menu...";
 	private String invalidCred = "Invalid credentials. Returning to main menu...";
-	private String loginSuccess = "Loggin in...";
+	private String loginSuccess = "Log in successful!";
+	private static String userid = null;
 	
 	Login(){
 		this.render = Application.GetRenderer();
@@ -76,16 +78,31 @@ public class Login implements MenuAction {
 			return true;
 		}
 		
+		this.render.notice("CONNECTING","Attempting to log in...");
 		this.render.success(this.loginSuccess);
+		Login.userid = userData[0];
+		
+		Render.WaitForUser();
 
 		while(connected){
 			this.render.memberSplash();
+			
+			String newPrompt = "[" + CurrentUserId() + "] " + this.memberPrompt;
+			this.memberMenu.setPrompt(newPrompt);
 			
 			char choice = this.memberMenu.getMenuChoice();
 			connected = this.memberMenu.action(choice);
 		}
 		
 		return true;
+	}
+	
+	public static void ChangeUser(String userId){
+		Login.userid = userId;
+	}
+	
+	public static String CurrentUserId(){
+		return Login.userid;
 	}
 
 }

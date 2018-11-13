@@ -45,6 +45,9 @@ public class Register implements MenuAction {
 			return true;
 		}
 		
+		render.success("Registration successful!");
+		Render.WaitForUser();
+		
 		return true;
 	}
 	

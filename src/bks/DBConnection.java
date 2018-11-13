@@ -114,7 +114,7 @@ public class DBConnection {
 			for(i = 1; i < values.length + 1; i++){
 				state.setString(i, values[i - 1]);
 			}
-			
+
 			state.setString(i, constraint[1]);
 			
 			try{

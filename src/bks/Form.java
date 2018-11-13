@@ -46,6 +46,8 @@ public class Form {
 			response[i] = buff;
 		}
 		
+		Render.NewLine();
+		
 		return response;
 	}
 	

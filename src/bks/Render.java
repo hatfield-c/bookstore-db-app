@@ -1,9 +1,21 @@
 package bks;
 
+import java.util.Scanner;
+
 public class Render {
 	
 	Render(){
 		
+	}
+	
+	public static void WaitForUser(){
+		System.out.println("Press ENTER to continue...");
+		Scanner in = new Scanner(System.in);
+		in.nextLine();
+	}
+	
+	public static void NewLine(){
+		System.out.println("");
 	}
 	
 	public void Menu(Menu menu){
@@ -21,6 +33,10 @@ public class Render {
 		for(int i = 0; i < options.length; i++){
 			System.out.println(margin + options[i] + ". " + titles[i]);
 		}
+	}
+	
+	public void heading(String title){
+		System.out.println(" ------------ "+ title + " ------------");
 	}
 	
 	public void prompt(String msg){

@@ -70,6 +70,10 @@ public class Menu {
 		return choice;
 	}
 	
+	void setPrompt(String prompt){
+		this.prompt = prompt;
+	}
+	
 	String getPrompt(){
 		return this.prompt;
 	}
