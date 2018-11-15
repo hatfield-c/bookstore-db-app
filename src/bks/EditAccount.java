@@ -46,7 +46,7 @@ public class EditAccount implements MenuAction {
 					"creditcardnumber"
 				},
 				responses,
-				new String[] { "userid", Login.CurrentUserId() }
+				new Condition( new String[] { "userid" }, new String[] { Login.CurrentUserId() })
 			);
 		}catch(Exception e){
 			render.error("Error during account edit - could not apply changes.");

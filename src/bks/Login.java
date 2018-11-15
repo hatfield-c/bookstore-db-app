@@ -59,7 +59,7 @@ public class Login implements MenuAction {
 			 data = db.read(
 					"members", 
 					new String[]{ "userid", "password" },  
-					new Condition("userid", response[0])
+					new Condition(new String[] { "userid" }, new String[] { response[0] })
 			);
 		} catch(Exception e){
 			this.render.error(this.loginFailure);
@@ -87,7 +87,7 @@ public class Login implements MenuAction {
 		while(connected){
 			this.render.memberSplash();
 			
-			String newPrompt = "[" + CurrentUserId() + "] " + this.memberPrompt;
+			String newPrompt = "[USER: " + CurrentUserId() + "]\n" + this.memberPrompt;
 			this.memberMenu.setPrompt(newPrompt);
 			
 			char choice = this.memberMenu.getMenuChoice();

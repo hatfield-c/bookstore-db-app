@@ -24,7 +24,7 @@ public class ViewAccount implements MenuAction {
 					"creditcardtype",
 					"creditcardnumber"
 				}, 
-				new Condition("userid", userId)
+				new Condition(new String[] { "userid" }, new String[] { userId })
 			);
 			
 			if(data.length != 1){

@@ -12,41 +12,18 @@ public class DBConnection {
 	private String user;
 	private String pass;
 	
-	public static String[] BooksCol = {
-			"isbn",
-			"author",
-			"title",
-			"price",
-			"subject"
-	};
-	
-	public static String[] MembersCol = {
-			"fname",
-			"lname",
-			"address",
-			"city",
-			"state",
-			"zip",
-			"phone",
-			"email",
-			"userid",
-			"password",
-			"creditcardtype",
-			"creditcardnumber"
-	};
-	
 	DBConnection(String url, String user, String pass){
 		this.url = url;
 		this.user = user;
 		this.pass = pass; 
 	}
 	
-	public QueryData[] read(String table, String columns[], Condition condition) throws SQLException{
+	public QueryData[] read(String table, String columns[], Condition conditions) throws SQLException{
 		if(columns == null || columns.length < 1){
 			throw new SQLException("Not enough columns");
 		}
 		
-		String where = (condition == null ? "" : " WHERE " + condition.con[0] + " like ?" ); 
+		String where = (conditions == null ? "" : this.whereBuilder(conditions) ); 
 		String qry = "SELECT " + this.selectBuilder(columns) + " FROM " + table + where;
 		
 		ResultSet result;
@@ -57,8 +34,10 @@ public class DBConnection {
 		try (Connection connection = DriverManager.getConnection(this.url, this.user, this.pass)){
 			state = connection.prepareStatement(qry, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			
-			if(condition != null){
-				state.setString(1, condition.con[1]);
+			if(conditions != null && conditions.getSize() > 0){
+				for(int i = 0; i < conditions.getSize(); i++){
+					state.setString( i + 1, conditions.value(i));
+				}
 			}
 			
 			result = state.executeQuery();
@@ -99,45 +78,51 @@ public class DBConnection {
 		}
 	}
 	
-	public boolean update(String table, String columns[], String values[], String constraint[]) throws SQLException{
+	public boolean update(String table, String columns[], String values[], Condition conditions) throws SQLException{
 		String set = this.setBuilder(columns, values);
 		
-		if(set == null || constraint == null || constraint.length != 2)
+		if(set == null || conditions == null || conditions.getSize() < 1)
 			return false;
 		
-		String sql = "UPDATE " + table + " SET " + set + " WHERE " + constraint[0] + " = ?"; 
+		String sql = "UPDATE " + table + " SET " + set + this.whereBuilder(conditions); 
 		
 		try (Connection connection = DriverManager.getConnection(this.url, this.user, this.pass)){
 			PreparedStatement state = connection.prepareStatement(sql);
 
-			int i;
-			for(i = 1; i < values.length + 1; i++){
+			for(int i = 1; i < values.length + 1; i++){
 				state.setString(i, values[i - 1]);
 			}
 
-			state.setString(i, constraint[1]);
+			if(conditions != null && conditions.getSize() > 0){
+				for(int i = 0; i < conditions.getSize(); i++){
+					state.setString(i + values.length + 1, conditions.value(i));
+				}
+			}
 			
 			try{
 				state.executeUpdate();
 				return true;
 			} catch(SQLException e){
+				e.printStackTrace();
 				return false;
 			}
 		}
 	}
 	
-	public boolean delete(String table, String constraint[]) throws SQLException{
+	public boolean delete(String table, Condition conditions) throws SQLException{
 		
-		if(constraint == null || constraint.length != 2){
+		if(conditions == null || conditions.getSize() < 1){
 			return false;
 		}
 		
-		String sql = "DELETE FROM " + table + " WHERE " + constraint[0] + " = ?"; 
+		String sql = "DELETE FROM " + table + this.whereBuilder(conditions); 
 		
 		try (Connection connection = DriverManager.getConnection(this.url, this.user, this.pass)){
 			PreparedStatement state = connection.prepareStatement(sql);
 			
-			state.setString(1, constraint[1]);
+			for(int i = 0; i < conditions.getSize(); i++){
+				state.setString(i + 1, conditions.value(i));
+			}
 			
 			try{
 				state.executeUpdate();
@@ -147,6 +132,24 @@ public class DBConnection {
 			}
 		}
 		
+	}
+	
+	private String whereBuilder(Condition conditions){
+		String str = "";
+		
+		if(conditions.getSize() < 1)
+			return str;
+		
+		str = str + " WHERE ";
+		
+		for(int i = 0 ; i < conditions.getSize(); i++){
+			str = str + conditions.field(i) + "=?";
+			
+			if(i != conditions.getSize() - 1)
+				str = str + " AND ";
+		}
+		
+		return str;
 	}
 	
 	private String setBuilder(String columns[], String values[]){

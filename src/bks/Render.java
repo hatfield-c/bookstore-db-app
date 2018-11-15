@@ -55,6 +55,46 @@ public class Render {
 		System.out.println("[" + title + "]: " +  msg);
 	}
 	
+	public void cart(Book books[]){
+		int isbnLength = 11;
+		int titleLength = 45;
+		int priceLength = 8;
+		int qtyLength = 6;
+		int totalLength = 8;
+		
+		System.out.println("Current Cart Contents:");
+		System.out.format(
+			"%-" + isbnLength + "s%-" + titleLength + "s%-" + priceLength + "s%-" + qtyLength + "s%-" + totalLength + "s\n", 
+			"ISBN",
+			"Title",
+			"Price",
+			"Qty",
+			"Total"
+		);
+		System.out.println("--------------------------------------------------------------------------------");
+		
+		double totalCost = 0;
+		for(int i = 0 ; i < books.length; i++){
+			System.out.format(
+				"%-" + isbnLength + "s%-" + titleLength + "s%-" + priceLength + ".2f%-" + qtyLength + "d%-" + totalLength + ".2f\n", 
+				books[i].getIsbn(),
+				books[i].getTitle(),
+				books[i].getPrice(),
+				books[i].getQty(),
+				books[i].getQty() * books[i].getPrice()
+			);
+			totalCost = totalCost + (books[i].getQty() * books[i].getPrice());
+		}
+		
+		System.out.println("--------------------------------------------------------------------------------");
+		System.out.format(
+			"%-" + (isbnLength + titleLength + priceLength + qtyLength) + "s%-" + totalLength + ".2f\n", 
+			"Total = ",
+			totalCost
+		);
+		
+	}
+	
 	public void loginSplash(){
 		System.out.println(
 			"**************************************************************\n" +
