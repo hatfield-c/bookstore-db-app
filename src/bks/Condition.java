@@ -5,20 +5,27 @@ public class Condition {
 	private String fields[];
 	private String values[];
 	private int size;
+	public boolean wildcard;
 	
 	Condition(){
 		this(new String[] { }, new String[] { });
 	}
 	
 	Condition(String fields[], String values[]){
+		this(fields, values, false);
+	}
+	
+	Condition(String fields[], String values[], boolean wildcard){
 		if(fields.length != values.length){
 			this.fields = new String[] {};
 			this.values = new String[] {};
 			this.size = 0;
+			this.wildcard = false;
 		} else {
 			this.fields = fields;
 			this.values = values;
 			this.size = this.fields.length;
+			this.wildcard = wildcard;
 		}
 	}
 	

@@ -84,7 +84,7 @@ public class Cart {
 						Integer.toString(product.getQty()),
 					},
 					new Condition(
-						new String[] { "userid", "isbn" },  
+						new String[] { "userid", "isbn" },
 						new String[] { Login.CurrentUserId(), product.getIsbn() }
 					)
 				);

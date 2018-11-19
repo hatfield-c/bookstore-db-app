@@ -35,8 +35,9 @@ public class DBConnection {
 			state = connection.prepareStatement(qry, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			
 			if(conditions != null && conditions.getSize() > 0){
+				String wildcard = conditions.wildcard ? "%" : "";
 				for(int i = 0; i < conditions.getSize(); i++){
-					state.setString( i + 1, conditions.value(i));
+					state.setString( i + 1, wildcard + conditions.value(i) + wildcard);
 				}
 			}
 			
@@ -136,14 +137,19 @@ public class DBConnection {
 	
 	private String whereBuilder(Condition conditions){
 		String str = "";
+		String operator = "=?";
 		
 		if(conditions.getSize() < 1)
 			return str;
 		
+		if(conditions.wildcard){
+			operator = " LIKE ?";
+		}
+			
 		str = str + " WHERE ";
 		
 		for(int i = 0 ; i < conditions.getSize(); i++){
-			str = str + conditions.field(i) + "=?";
+			str = str + conditions.field(i) + operator;
 			
 			if(i != conditions.getSize() - 1)
 				str = str + " AND ";

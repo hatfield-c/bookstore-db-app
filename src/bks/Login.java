@@ -28,7 +28,7 @@ public class Login implements MenuAction {
 		},
 		new MenuAction[] {
 				new BrowseSubject(),
-				new Search(),
+				new SearchMenu(),
 				new CartMenu(),
 				new OrderStatus(),
 				new Checkout(),
