@@ -19,6 +19,24 @@ public class Table {
 		}
 	}
 	
+	Table(Book book){
+		this.labels = new String[] {
+			"Author",
+			"Title",
+			"ISBN",
+			"Price",
+			"Subject"
+		};
+		
+		this.values = new String[] {
+			book.getAuthor(),
+			book.getTitle(),
+			book.getIsbn(),
+			Double.toString(book.getPrice()),
+			book.getSubject()
+		};
+	}
+	
 	public void render(){
 		Render render = Application.GetRenderer();
 		

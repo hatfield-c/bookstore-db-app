@@ -6,6 +6,7 @@ public class Condition {
 	private String values[];
 	private int size;
 	public boolean wildcard;
+	public boolean unique = false;
 	
 	Condition(){
 		this(new String[] { }, new String[] { });

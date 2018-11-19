@@ -3,9 +3,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.ResultSet;
-import oracle.jdbc.pool.OracleDataSource;
 
 public class DBConnection {
 	private String url;
@@ -23,7 +21,7 @@ public class DBConnection {
 			throw new SQLException("Not enough columns");
 		}
 		
-		String where = (conditions == null ? "" : this.whereBuilder(conditions) ); 
+		String where = (conditions == null ? "" : this.whereBuilder(conditions) );
 		String qry = "SELECT " + this.selectBuilder(columns) + " FROM " + table + where;
 		
 		ResultSet result;

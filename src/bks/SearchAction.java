@@ -2,7 +2,7 @@ package bks;
 
 public class SearchAction implements MenuAction {
 
-	private Menu searchChoices = new Menu(
+	public static Menu SearchChoices = new Menu(
 		"Enter choice",
 		new char[] {
 			'a',
@@ -21,7 +21,7 @@ public class SearchAction implements MenuAction {
 		}
 	);
 	
-	private Menu browseChoices = new Menu(
+	public static Menu BrowseChoices = new Menu(
 		"Enter choice",
 		new char[] {
 			'a',
@@ -40,25 +40,25 @@ public class SearchAction implements MenuAction {
 		}
 	);
 	
-	private String action;
+	private String attribute;
 	
 	SearchAction(String action){
-		this.action = action;
-		this.searchChoices.subMenu = true;
-		this.browseChoices.subMenu = true;
+		this.attribute = action;
+		SearchChoices.subMenu = true;
+		BrowseChoices.subMenu = true;
 	}
 	
 	public boolean execute(){
 		Render render = Application.GetRenderer();
 		Form form = new Form(
 			"str",
-			"Enter " + this.action + " or part of the " + this.action
+			"Enter " + this.attribute + " or part of the " + this.attribute
 		);
 		
 		String response[] = form.response();
 		Search searcher = new Search();
 		Book books[] = searcher.searchBooks(
-			this.action, 
+			this.attribute, 
 			response[0], 
 			true
 		);
@@ -81,32 +81,15 @@ public class SearchAction implements MenuAction {
 				j < ( i + 1 == books.length ? i + 1 : i + 2); 
 				j++
 			){
-				Table bookData = new Table(
-					new String[] {
-						"Author",
-						"Title",
-						"ISBN",
-						"Price",
-						"Subject"
-					},
-					new String[] {
-						books[j].getAuthor(),
-						books[j].getTitle(),
-						books[j].getIsbn(),
-						Double.toString(books[j].getPrice()),
-						books[j].getSubject()
-					}
-				);
-			
+				Table bookData = new Table(books[j]);
 				bookData.render();
 				Render.NewLine();
-				
 			}
 			
 			
 			if(i + 1 != books.length && i + 2 != books.length){
-				char choice = this.browseChoices.getMenuChoice();
-				continueBrowse = this.browseChoices.action(choice);
+				char choice = BrowseChoices.getMenuChoice();
+				continueBrowse = BrowseChoices.action(choice);
 			
 				if(!continueBrowse){
 					return false;
@@ -118,8 +101,8 @@ public class SearchAction implements MenuAction {
 			render.notice("Info", "End of search results.");
 		}
 		
-		char choice = this.searchChoices.getMenuChoice();
-		return this.searchChoices.action(choice);
+		char choice = SearchChoices.getMenuChoice();
+		return SearchChoices.action(choice);
 	}
 	
 }
