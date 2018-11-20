@@ -3,7 +3,7 @@ package bks;
 public class AccountMenu implements MenuAction {
 	
 	private Menu accountInfo = new Menu(
-			"What do you want to do?",
+			"What do you want to do",
 			new char[] {
 				'1',
 				'2'

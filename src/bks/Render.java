@@ -55,14 +55,67 @@ public class Render {
 		System.out.println("[" + title + "]: " +  msg);
 	}
 	
+	public void delim(){
+		System.out.println("--------------------------------------------------------------------------------");
+	}
+	
+	public void invoice(Order order){
+		int addressLength = 41;
+		String orderNo = order.getOrderNo();
+		String shipAddress[] = order.getShipAddress();
+		String billAddress[] = order.getBillAddress();
+		
+		System.out.println("                  Details for Order no." + orderNo);
+		
+		System.out.format(
+			"%-" + addressLength + "s%-" + addressLength + "s\n", 
+			"Shipping Address",
+			"Billing Address"
+		);
+		
+		System.out.format(
+			"%-" + addressLength + "s%-" + addressLength + "s\n", 
+			"Name: " + shipAddress[4] + " " + shipAddress[5],
+			"Name: " + billAddress[4] + " " + billAddress[5]
+		);
+		
+		System.out.format(
+			"%-" + addressLength + "s%-" + addressLength + "s\n", 
+			"Address: " + shipAddress[0],
+			"Address: " + billAddress[0]
+		);
+		
+		System.out.format(
+			"%-" + addressLength + "s%-" + addressLength + "s\n", 
+			shipAddress[1],
+			billAddress[1]
+		);
+		
+		System.out.format(
+			"%-" + addressLength + "s%-" + addressLength + "s\n", 
+			shipAddress[2] + " " + shipAddress[3],
+			billAddress[2] + " " + billAddress[3]
+		);
+		
+		this.delim();
+		this.productTable(order.getBooks());
+		this.delim();
+		WaitForUser();
+	}
+	
 	public void cart(Book books[]){
+		System.out.println("Current Cart Contents:");
+		this.productTable(books);
+		System.out.println();
+	}
+	
+	public void productTable(Book books[]){
 		int isbnLength = 11;
 		int titleLength = 45;
 		int priceLength = 8;
 		int qtyLength = 6;
 		int totalLength = 8;
 		
-		System.out.println("Current Cart Contents:");
 		System.out.format(
 			"%-" + isbnLength + "s%-" + titleLength + "s%-" + priceLength + "s%-" + qtyLength + "s%-" + totalLength + "s\n", 
 			"ISBN",
@@ -71,7 +124,7 @@ public class Render {
 			"Qty",
 			"Total"
 		);
-		System.out.println("--------------------------------------------------------------------------------");
+		this.delim();
 		
 		double totalCost = 0;
 		for(int i = 0 ; i < books.length; i++){
@@ -86,7 +139,7 @@ public class Render {
 			totalCost = totalCost + (books[i].getQty() * books[i].getPrice());
 		}
 		
-		System.out.println("--------------------------------------------------------------------------------");
+		this.delim();
 		System.out.format(
 			"%-" + (isbnLength + titleLength + priceLength + qtyLength) + "s%-" + totalLength + ".2f\n", 
 			"Total = ",

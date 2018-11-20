@@ -9,6 +9,20 @@ public class Cart {
 		this.render = Application.GetRenderer();
 	}
 	
+	public void dumpCart(){
+		try{
+			db.delete(
+				"cart", 
+				new Condition(
+					new String[] { "userid" }, 
+					new String[] { Login.CurrentUserId() }
+				)
+			);
+		}catch(Exception e){
+			this.render.error("Could not clear the cart.");
+		}
+	}
+	
 	public Product[] getProducts(){
 		QueryData cartData[];
 		Product products[];
