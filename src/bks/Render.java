@@ -59,6 +59,37 @@ public class Render {
 		System.out.println("--------------------------------------------------------------------------------");
 	}
 	
+	public void orderList(OrderEntry orders[]){
+		int cellWidth = 25; 
+		
+		if(orders.length < 1)
+			return;
+		
+		System.out.println("Orders placed by " + orders[0].getName());
+		this.delim();
+		
+		System.out.format(
+			"%-" + cellWidth + "s%-" + cellWidth + "s%-" + cellWidth + "s\n" , 
+			"ORDER NO",
+			"RECEIVED DATE",
+			"SHIPPED DATE"
+		);
+		
+		this.delim();
+		
+		for(int i = 0; i < orders.length; i++){
+			System.out.format(
+				"%-" + cellWidth + "s%" + cellWidth + "s%" + cellWidth + "s\n" , 
+				orders[i].getOrderNo(),
+				orders[i].getRecDate(),
+				orders[i].getShipDate()
+			);
+		}
+		
+		this.delim();
+		
+	}
+	
 	public void invoice(Order order){
 		int addressLength = 41;
 		String orderNo = order.getOrderNo();

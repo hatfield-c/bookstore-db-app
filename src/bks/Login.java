@@ -97,10 +97,6 @@ public class Login implements MenuAction {
 		return true;
 	}
 	
-	public static void ChangeUser(String userId){
-		Login.userid = userId;
-	}
-	
 	public static String CurrentUserId(){
 		return Login.userid;
 	}

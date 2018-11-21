@@ -26,17 +26,24 @@ public class Order {
 		String date = dateFormatter.format(localDate);
 		
 		try {
+			Condition countCondition = new Condition();
+			countCondition.setOrder("ORDER BY ono");
 			QueryData results[] = db.read(
 				"orders",
 				new String[] {
-					"count (*)"
+					"ono"
 				}, 
-				null
+				countCondition
 			);
 			
-			this.orderNo = results[0].getData()[0];
-			int num = Integer.parseInt(this.orderNo) + 1;
-			this.orderNo = Integer.toString(num);
+			if(results.length > 0){
+				String lastData[] = results[results.length - 1].getData();
+				int newOrderNo = Integer.parseInt(lastData[0]) + 1;
+				this.orderNo = Integer.toString(newOrderNo);
+			} else {
+				this.orderNo = "1";
+			}
+
 			db.insert(
 				"orders", 	
 				new String[] {

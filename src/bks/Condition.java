@@ -4,6 +4,7 @@ public class Condition {
 
 	private String fields[];
 	private String values[];
+	private String order;
 	private int size;
 	public boolean wildcard;
 	public boolean unique = false;
@@ -28,6 +29,7 @@ public class Condition {
 			this.size = this.fields.length;
 			this.wildcard = wildcard;
 		}
+		this.order = "";
 	}
 	
 	public String field(int i){
@@ -46,6 +48,14 @@ public class Condition {
 	
 	public int getSize(){
 		return this.size;
+	}
+	
+	public String getOrder(){
+		return this.order;
+	}
+	
+	public void setOrder(String order){
+		this.order = order;
 	}
 	
 }

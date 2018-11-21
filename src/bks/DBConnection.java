@@ -22,7 +22,12 @@ public class DBConnection {
 		}
 		
 		String where = (conditions == null ? "" : this.whereBuilder(conditions) );
-		String qry = "SELECT " + this.selectBuilder(columns) + " FROM " + table + where;
+		String order = "";
+		if(conditions != null && !conditions.getOrder().equals("")){
+			order = " " + conditions.getOrder();
+		}
+		
+		String qry = "SELECT " + this.selectBuilder(columns) + " FROM " + table + where + order;
 		
 		ResultSet result;
 		PreparedStatement state;
@@ -31,7 +36,7 @@ public class DBConnection {
 		
 		try (Connection connection = DriverManager.getConnection(this.url, this.user, this.pass)){
 			state = connection.prepareStatement(qry, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			
+
 			if(conditions != null && conditions.getSize() > 0){
 				String wildcard = conditions.wildcard ? "%" : "";
 				for(int i = 0; i < conditions.getSize(); i++){
@@ -97,12 +102,11 @@ public class DBConnection {
 					state.setString(i + values.length + 1, conditions.value(i));
 				}
 			}
-			
+
 			try{
 				state.executeUpdate();
 				return true;
 			} catch(SQLException e){
-				e.printStackTrace();
 				return false;
 			}
 		}

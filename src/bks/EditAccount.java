@@ -4,7 +4,7 @@ public class EditAccount implements MenuAction {
 
 	public boolean execute() {
 		Form accountForm = new Form(
-			new String[]{"str", "str", "str", "str", "str", "int", "str", "str", "str", "str", "str", "str"},
+			new String[]{"str", "str", "str", "str", "str", "int", "str", "str", "str", "str"},
 			new String[]{ 
 				"First Name",
 				"Last Name",
@@ -14,8 +14,6 @@ public class EditAccount implements MenuAction {
 				"ZIP",
 				"Phone",
 				"Email",
-				"UserID",
-				"Password",
 				"Card Type",
 				"Card Number"
 			}
@@ -40,8 +38,6 @@ public class EditAccount implements MenuAction {
 					"zip",
 					"phone",
 					"email",
-					"userid",
-					"password",
 					"creditcardtype",
 					"creditcardnumber"
 				},
@@ -59,7 +55,6 @@ public class EditAccount implements MenuAction {
 		}
 		
 		render.success("Account edit successful!");
-		Login.ChangeUser(responses[8]);
 		Render.WaitForUser();
 		
 		return true;
