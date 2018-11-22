@@ -1,7 +1,9 @@
 package bks;
 
+// Controller to determine a kind of search to perform
 public class SearchMenu implements MenuAction{
 
+	// Menu for choosing the kind of search
 	private Menu searchMenu = new Menu(
 		"Type your option",
 		new char[] {
@@ -21,13 +23,17 @@ public class SearchMenu implements MenuAction{
 		}
 	);
 	
+	// Set the search menu to a submenu
 	SearchMenu(){
 		this.searchMenu.subMenu = true;
 	}
 	
+	// Executes when this action is chosen in a menu
 	public boolean execute(){
+		// Get the renderer from the application
 		Render render = Application.GetRenderer();
 		
+		// While we are running this menu, continue getting menu choices from the user
 		boolean running = true;
 		
 		while(running){

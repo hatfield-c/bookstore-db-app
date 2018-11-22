@@ -1,7 +1,9 @@
 package bks;
 
+// Data object to hold book data
 public class Book {
 
+	// Internal book data
 	private String isbn;
 	private String author;
 	private String title;
@@ -9,13 +11,16 @@ public class Book {
 	private double price;
 	private int qty;
 	
+	// A book is instantiated from a more primitive product object
 	Book(Product product){
 		this.isbn = product.getIsbn();
 		this.qty = product.getQty();
 		
+		// Get a local instance of the db
 		DBConnection db = Application.GetDB();
 		
 		try{
+			// Try to read book referenced by the product from the db
 			QueryData data[] = db.read(
 				"books", 
 				new String[] { "author", "title", "price", "subject" }, 
@@ -25,9 +30,11 @@ public class Book {
 				)	
 			);
 			
+			// If no results, the book/product does not exist in the db
 			if(data.length < 0)
 				throw new Exception("Product not found.");
 			
+			// Map data from the result object to this book object
 			String buffer[] = data[0].getData();
 			this.author = buffer[0];
 			this.title = buffer[1];
@@ -35,6 +42,7 @@ public class Book {
 			this.subject = buffer[3];
 			
 		} catch(Exception e){
+			// If there was an error during reading/mapping, set everything to empty and end instantiation
 			this.isbn = "";
 			this.author = "";
 			this.title = "";
@@ -43,6 +51,10 @@ public class Book {
 			this.qty = 0;
 		}
 	}
+	
+	/***
+	 *    Getters and setters for the book objects
+	 */
 	
 	public String getIsbn() {
 		return isbn;

@@ -1,14 +1,19 @@
 package bks;
 
+// structure to hold a two column table of data
 public class Table {
 
+	// Internal data for the table
 	private String labels[];
 	private String values[];
 	
+	// Instantiate an empty table
 	Table(){
 		this(new String[] {}, new String[] {});
 	}
 	
+	// General table constructor - if the number of labels doesn't match the
+	// number of values, then set this table to empty.
 	Table(String labels[], String values[]){
 		if(labels.length != values.length){
 			this.labels = new String[] {};
@@ -19,6 +24,7 @@ public class Table {
 		}
 	}
 	
+	// Build this table based on a book object supplied
 	Table(Book book){
 		this.labels = new String[] {
 			"Author",
@@ -37,6 +43,8 @@ public class Table {
 		};
 	}
 	
+	
+	// Render this table
 	public void render(){
 		Render render = Application.GetRenderer();
 		
